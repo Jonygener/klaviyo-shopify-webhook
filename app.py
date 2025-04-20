@@ -7,7 +7,7 @@ import requests
 load_dotenv()
 
 SHOPIFY_ACCESS_TOKEN = os.getenv("SHOPIFY_ACCESS_TOKEN")
-SHOPIFY_STORE_URL = os.getenv("SHOPIFY_STORE_URL")  # Např. "mojefirma.myshopify.com"
+SHOPIFY_SHOP_URL = os.getenv("SHOPIFY_SHOP_URL")  # Např. "mojefirma.myshopify.com"
 
 app = Flask(__name__)
 
@@ -22,7 +22,7 @@ def klaviyo_webhook():
         "X-Shopify-Access-Token": SHOPIFY_ACCESS_TOKEN,
         "Content-Type": "application/json"
     }
-    search_url = f"https://{SHOPIFY_STORE_URL}/admin/api/2023-10/customers/search.json?query=email:{email}"
+    search_url = f"https://{SHOPIFY_SHOP_URL}/admin/api/2023-10/customers/search.json?query=email:{email}"
     response = requests.get(search_url, headers=headers)
     customers = response.json().get('customers', [])
 
@@ -37,7 +37,7 @@ def klaviyo_webhook():
         all_tags.append(tag)
 
     # Aktualizuj zákazníka s novými tagy
-    update_url = f"https://{SHOPIFY_STORE_URL}/admin/api/2023-10/customers/{customer_id}.json"
+    update_url = f"https://{SHOPIFY_SHOP_URL}/admin/api/2023-10/customers/{customer_id}.json"
     payload = {
         "customer": {
             "id": customer_id,
