@@ -31,7 +31,7 @@ def klaviyo_webhook():
 
     customer_id = customers[0]['id']
     existing_tags = customers[0]['tags']
-    all_tags = existing_tags.split(', ') if existing_tags else []
+    all_tags = [t for t in (existing_tags or "").split(', ') if t]
     
     if tag not in all_tags:
         all_tags.append(tag)
