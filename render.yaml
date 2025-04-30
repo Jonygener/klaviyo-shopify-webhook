@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: review-coupon-webhook
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SHOPIFY_ACCESS_TOKEN
+        sync: false
+      - key: DISCOUNT_ACCESS_TOKEN
+        sync: false
+      - key: SHOPIFY_STORE_URL
+        sync: false
+      - key: KLAVIYO_API_KEY
+        sync: false
